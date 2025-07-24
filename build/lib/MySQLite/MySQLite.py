@@ -1,4 +1,4 @@
-import os, sqlite3
+import os, sqlite3, copy
 
 class MySQLite():
     def __init__(self, db = f"{os.path.dirname(__file__)}/sqlite3.db"):
@@ -32,27 +32,31 @@ class SQLiteDebug(MySQLite):
     
     def db_console(self):
         self.sql = ""
-        sqlLine = " "
-        while (
-            (sqlLine.count(";") == 0) and
-            (sqlLine != "") and
-            (sqlLine.count("quit") == 0)
-        ):
-            sqlLine = input("sqlite > ")
-            self.sql += f" {sqlLine}"
-        
-        if (self.sql.count("quit") > 0):
-            return ["Bye"]
-        else:
-            return self.send_sql(self.sql)
-
+        while True:
+            sql = input("sqlite3 > ")
+            while True:
+                self.sql += f"{sql} "
+                if sql.count(";") > 0 or sql == "":
+                    sql = copy.deepcopy(self.sql)
+                    self.sql = ""
+                    break
+                sql = input("    - > ")
+                
+            if sql.count("quit") > 0:
+                return ["Bye"]
+            else:
+                return self.send_sql(sql)
+            
 def main():
     val = ""
-    while (val != ["Bye"]):
+    while True:
         with SQLiteDebug(f"{os.getcwd()}/sqlite3.db") as db:
             try:
                 val = db.db_console()
-                if len(val) != 0:
-                    print(val)
+                if val != ["Bye"]:
+                    for rd in val:
+                        print(rd)
+                else:
+                    break
             except Exception as e:
                 print(e)

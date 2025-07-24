@@ -49,7 +49,10 @@ class SQLiteDebug(MySQLite):
 def main():
     val = ""
     while (val != ["Bye"]):
-        with SQLiteDebug() as db:
-            val = db.db_console()
-            if len(val) != 0:
-                print(val)
+        with SQLiteDebug(f"{os.getcwd()}/sqlite3.db") as db:
+            try:
+                val = db.db_console()
+                if len(val) != 0:
+                    print(val)
+            except Exception as e:
+                print(e)

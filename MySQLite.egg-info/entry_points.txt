@@ -1,0 +1,2 @@
+[console_scripts]
+MySQLite = MySQLite.MySQLite:main

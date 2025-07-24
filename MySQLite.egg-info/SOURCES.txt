@@ -1,0 +1,10 @@
+LICENSE
+README.md
+setup.py
+MySQLite/MySQLite.py
+MySQLite/__init__.py
+MySQLite.egg-info/PKG-INFO
+MySQLite.egg-info/SOURCES.txt
+MySQLite.egg-info/dependency_links.txt
+MySQLite.egg-info/entry_points.txt
+MySQLite.egg-info/top_level.txt
